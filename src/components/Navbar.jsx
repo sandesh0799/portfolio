@@ -21,7 +21,7 @@ export default function Navbar() {
       aria-label="Primary"
     >
       <div className="max-w-4xl mx-auto flex justify-between p-4 items-center">
-        <div className="text-xl font-bold select-none">MyPortfolio</div>
+        <div className="text-xl font-bold select-none">CreativeCove</div>
 
         {/* Desktop menu */}
         <div className="hidden md:flex space-x-6">

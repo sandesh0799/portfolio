@@ -124,7 +124,7 @@ export default function Gallery() {
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-5 py-2 rounded bg-orange-200 hover:bg-orange-300 transition disabled:opacity-40"
+          className="px-5 py-2 rounded bg-orange-200 hover:bg-orange-300 transition disabled:opacity-40 cursor-pointer"
         >
           Prev
         </button>
@@ -134,7 +134,7 @@ export default function Gallery() {
         <button
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-5 py-2 rounded bg-orange-200 hover:bg-orange-300 transition disabled:opacity-40"
+          className="px-5 py-2 rounded bg-orange-200 hover:bg-orange-300 transition disabled:opacity-40 cursor-pointer"
         >
           Next
         </button>
@@ -145,7 +145,7 @@ export default function Gallery() {
         <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <button
             onClick={closeModal}
-            className="absolute top-6 right-6 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-all duration-200 z-10 group"
+            className="absolute top-6 right-6 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-all duration-200 z-10 group cursor-pointer"
           >
             <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
