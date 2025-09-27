@@ -16,10 +16,15 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          tailwind: ['@tailwindcss/vite']
+          router: ['react-router-dom'],
+          icons: ['react-icons'],
+          motion: ['framer-motion'],
+          swiper: ['swiper']
         }
       }
-    }
+    },
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 1000
   },
   server: {
     port: 3000,
@@ -28,5 +33,9 @@ export default defineConfig({
   preview: {
     port: 3000,
     host: true
+  },
+  // Handle potential dependency issues
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'react-icons']
   }
 })
