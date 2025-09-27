@@ -16,7 +16,7 @@ export default function Gallery() {
       .then((res) => res.json())
       .then((data) => {
         if (!Array.isArray(data)) throw new Error("Invalid image data");
-        // Store the full image objects with filename and url
+        // Store full image objects instead of filenames only
         setImages(data);
         setLoading(false);
       })
@@ -90,17 +90,11 @@ export default function Gallery() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
         {currentImages.map((imageObj, i) => {
           const index = (currentPage - 1) * itemsPerPage + i;
-          const imageUrl = imageObj.url; // Use the URL from API response
+          const imageUrl = imageObj.url; // use full URL from API
           return (
             <div
               key={imageObj.filename}
-              onClick={() =>
-                setSelectedImage({
-                  src: imageUrl,
-                  index,
-                  filename: imageObj.filename,
-                })
-              }
+              onClick={() => setSelectedImage({ src: imageUrl, index })}
               className={`relative cursor-pointer group transition-transform hover:scale-110 hover:z-20 ${getRotation(
                 index
               )}`}
@@ -116,11 +110,6 @@ export default function Gallery() {
                     alt={`Memory ${index + 1}`}
                     className="w-full h-48 object-cover transition group-hover:brightness-110"
                     loading="lazy"
-                    onError={(e) => {
-                      console.error(`Failed to load image: ${imageUrl}`);
-                      e.target.src =
-                        "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBzdHJva2U9IiNhNGE0YTQiIGZpbGw9Im5vbmUiLz4KPHN2Zz4K"; // Placeholder image
-                    }}
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition duration-300"></div>
                 </div>
@@ -143,39 +132,26 @@ export default function Gallery() {
         })}
       </div>
 
-      {/* Empty State */}
-      {!loading && images.length === 0 && (
-        <div className="text-center py-20">
-          <div className="text-6xl text-gray-300 mb-4">📸</div>
-          <h3 className="text-2xl font-bold text-gray-600 mb-2">
-            No memories yet
-          </h3>
-          <p className="text-gray-500">Upload some images to see them here!</p>
-        </div>
-      )}
-
       {/* Pagination */}
-      {images.length > itemsPerPage && (
-        <div className="flex justify-center items-center mt-12 space-x-6">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-5 py-2 bg-orange-200 hover:bg-orange-300 rounded disabled:opacity-40 transition"
-          >
-            Prev
-          </button>
-          <span className="text-gray-700 font-mono">
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            className="px-5 py-2 bg-orange-200 hover:bg-orange-300 rounded disabled:opacity-40 transition"
-          >
-            Next
-          </button>
-        </div>
-      )}
+      <div className="flex justify-center items-center mt-12 space-x-6">
+        <button
+          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+          disabled={currentPage === 1}
+          className="px-5 py-2 bg-orange-200 hover:bg-orange-300 rounded disabled:opacity-40 transition"
+        >
+          Prev
+        </button>
+        <span className="text-gray-700 font-mono">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+          disabled={currentPage === totalPages}
+          className="px-5 py-2 bg-orange-200 hover:bg-orange-300 rounded disabled:opacity-40 transition"
+        >
+          Next
+        </button>
+      </div>
 
       {/* Modal */}
       {selectedImage && (
@@ -210,9 +186,6 @@ export default function Gallery() {
               </h3>
               <p className="text-gray-600 text-lg mt-2">
                 A beautiful piece from my digital art collection
-              </p>
-              <p className="text-xs text-gray-400 mt-1 font-mono">
-                {selectedImage.filename}
               </p>
             </div>
           </div>
